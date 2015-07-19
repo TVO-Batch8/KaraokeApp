@@ -10,6 +10,8 @@
 	<string>YoutubeAPIDemo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>8850BF649BA2484C77AAFA04E98D8157AAB216EC</key>
+		<string>https://github.com/TVO-Batch8/KaraokeApp.git</string>
 		<key>ED594F344C0195523F38109EC29392E0CF8EB0EF</key>
 		<string>https://github.com/angiagia/YoutubeAPIDemo.git</string>
 	</dict>
@@ -17,17 +19,27 @@
 	<string>YoutubeAPIDemo.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>ED594F344C0195523F38109EC29392E0CF8EB0EF</key>
+		<key>8850BF649BA2484C77AAFA04E98D8157AAB216EC</key>
 		<string>../..</string>
+		<key>ED594F344C0195523F38109EC29392E0CF8EB0EF</key>
+		<string>../../../YoutubeAPIDemo</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/angiagia/YoutubeAPIDemo.git</string>
+	<string>https://github.com/TVO-Batch8/KaraokeApp.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>ED594F344C0195523F38109EC29392E0CF8EB0EF</string>
+	<string>8850BF649BA2484C77AAFA04E98D8157AAB216EC</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8850BF649BA2484C77AAFA04E98D8157AAB216EC</string>
+			<key>IDESourceControlWCCName</key>
+			<string>KaraokeApp</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

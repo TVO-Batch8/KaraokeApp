@@ -20,5 +20,4 @@
 @property (strong, nonatomic) NSString *idOfSong;
 
 - (IBAction)stopTapped:(id)sender;
-- (IBAction)playTapped:(id)sender;
 @end
