@@ -20,11 +20,11 @@ int indexOfSong;
 bool isSearch=NO;
 //    -----------------ActionSheet for cell click
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
+
     if(buttonIndex==0){
-        
+     
         [self performSegueWithIdentifier:@"pushToOnlySing" sender:self];
-        
+
     }
     else if(buttonIndex==1){
         KaraokeSong *song=[self.arrSongsList objectAtIndex:indexOfSong];
@@ -40,7 +40,7 @@ bool isSearch=NO;
     }else if(buttonIndex==2){
         
         [self performSegueWithIdentifier:@"pushToSingAndRecord" sender:self];
-        
+
     }else if(buttonIndex==3){
         
         [self performSegueWithIdentifier:@"pushToFavouriteList" sender:self];
@@ -70,19 +70,20 @@ bool isSearch=NO;
     [super viewDidLoad];
     self.searchBar.delegate=self;
     [self initData];
-    [self deleteAllInCoreData];
-    [self requestToServerYoutubeAPI];
+//    [self requestToServerYoutubeAPI];
     
-}
--(void)viewDidAppear:(BOOL)animated
-{
-    //    [self deleteAllInCoreData];
-    [super viewDidAppear:animated];
-    
-    self.arrSongsList = [self fetchListSong];
-    
+    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"KaraokeSong"];
+    NSError *requestError=nil;
+    self.arrSongsList = [managedObjectContext executeFetchRequest:fetchRequest error:&requestError];
     if([self.arrSongsList count]>1)
     {
+        
+        for(KaraokeSong *song in self.arrSongsList){
+            NSLog(@"%@ - %@", song.nameSong, song.idSong);
+            
+        }
+        
         [self.tableListSong reloadData];
     }
     else
@@ -90,18 +91,13 @@ bool isSearch=NO;
         NSLog(@"No attribute for this entity!");
     }
     
-    
 }
--(NSArray*)fetchListSong{
-    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    //[[NSFetchRequest alloc] initWithEntityName:@"KaraokeSong" inManagedObjectContext:managedOb;jectContext];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"KaraokeSong" inManagedObjectContext:managedObjectContext];
-    [fetchRequest setEntity:entity];
+-(void)viewDidAppear:(BOOL)animated
+{
+//    [self deleteAllInCoreData];
+    [super viewDidAppear:self];
+    // Fetch the devices from persistent data store
     
-    
-    NSError *requestError=nil;
-    return [managedObjectContext executeFetchRequest:fetchRequest error:&requestError];
 }
 -(void)deleteAllInCoreData{
     NSManagedObjectContext *context=[self managedObjectContext];
@@ -165,7 +161,9 @@ bool isSearch=NO;
         [self insertArrSongs:[[[self.arrSongs objectAtIndex:i] objectForKey:@"snippet"] objectForKey:@"title"] idSong:[[[[self.arrSongs objectAtIndex:i] objectForKey:@"snippet"] objectForKey:@"resourceId"] objectForKey:@"videoId"]];
         NSLog(@"%@ -%@",[[[self.arrSongs objectAtIndex:i] objectForKey:@"snippet"] objectForKey:@"title"],[[[[self.arrSongs objectAtIndex:i] objectForKey:@"snippet"] objectForKey:@"resourceId"] objectForKey:@"videoId"]);
     }
-    self.arrSongsList = [self fetchListSong];
+    UIAlertView *aleart=[[UIAlertView alloc]initWithTitle:@"FINISH" message:[NSString stringWithFormat:@"Insert to data",nil] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+    [aleart show];
+
     [self.tableListSong reloadData];
 }
 
@@ -201,8 +199,8 @@ bool isSearch=NO;
 {
     NSManagedObjectContext *context= [self managedObjectContext];
     Favourite *fsong = [NSEntityDescription
-                        insertNewObjectForEntityForName:@"Favourite"
-                        inManagedObjectContext:context];
+                         insertNewObjectForEntityForName:@"Favourite"
+                         inManagedObjectContext:context];
     if (fsong != nil){
         fsong.nameSong = nameSong;
         fsong.idSong = idSong;
