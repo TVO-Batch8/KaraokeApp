@@ -70,20 +70,19 @@ bool isSearch=NO;
     [super viewDidLoad];
     self.searchBar.delegate=self;
     [self initData];
-    //    [self requestToServerYoutubeAPI];
+    [self deleteAllInCoreData];
+    [self requestToServerYoutubeAPI];
     
-    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"KaraokeSong"];
-    NSError *requestError=nil;
-    self.arrSongsList = [managedObjectContext executeFetchRequest:fetchRequest error:&requestError];
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    //    [self deleteAllInCoreData];
+    [super viewDidAppear:animated];
+    
+    self.arrSongsList = [self fetchListSong];
+    
     if([self.arrSongsList count]>1)
     {
-        
-        //        for(KaraokeSong *song in self.arrSongsList){
-        //            NSLog(@"%@ - %@", song.nameSong, song.idSong);
-        //
-        //        }
-        
         [self.tableListSong reloadData];
     }
     else
@@ -91,13 +90,18 @@ bool isSearch=NO;
         NSLog(@"No attribute for this entity!");
     }
     
-}
--(void)viewDidAppear:(BOOL)animated
-{
-    //    [self deleteAllInCoreData];
-    [super viewDidAppear:self];
-    // Fetch the devices from persistent data store
     
+}
+-(NSArray*)fetchListSong{
+    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    //[[NSFetchRequest alloc] initWithEntityName:@"KaraokeSong" inManagedObjectContext:managedOb;jectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"KaraokeSong" inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    
+    NSError *requestError=nil;
+    return [managedObjectContext executeFetchRequest:fetchRequest error:&requestError];
 }
 -(void)deleteAllInCoreData{
     NSManagedObjectContext *context=[self managedObjectContext];
@@ -161,9 +165,7 @@ bool isSearch=NO;
         [self insertArrSongs:[[[self.arrSongs objectAtIndex:i] objectForKey:@"snippet"] objectForKey:@"title"] idSong:[[[[self.arrSongs objectAtIndex:i] objectForKey:@"snippet"] objectForKey:@"resourceId"] objectForKey:@"videoId"]];
         NSLog(@"%@ -%@",[[[self.arrSongs objectAtIndex:i] objectForKey:@"snippet"] objectForKey:@"title"],[[[[self.arrSongs objectAtIndex:i] objectForKey:@"snippet"] objectForKey:@"resourceId"] objectForKey:@"videoId"]);
     }
-    UIAlertView *aleart=[[UIAlertView alloc]initWithTitle:@"FINISH" message:[NSString stringWithFormat:@"Insert to data",nil] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
-    [aleart show];
-    
+    self.arrSongsList = [self fetchListSong];
     [self.tableListSong reloadData];
 }
 
