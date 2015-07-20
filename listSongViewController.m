@@ -20,11 +20,11 @@ int indexOfSong;
 bool isSearch=NO;
 //    -----------------ActionSheet for cell click
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-
+    
     if(buttonIndex==0){
-     
+        
         [self performSegueWithIdentifier:@"pushToOnlySing" sender:self];
-
+        
     }
     else if(buttonIndex==1){
         KaraokeSong *song=[self.arrSongsList objectAtIndex:indexOfSong];
@@ -40,7 +40,7 @@ bool isSearch=NO;
     }else if(buttonIndex==2){
         
         [self performSegueWithIdentifier:@"pushToSingAndRecord" sender:self];
-
+        
     }else if(buttonIndex==3){
         
         [self performSegueWithIdentifier:@"pushToFavouriteList" sender:self];
@@ -70,7 +70,7 @@ bool isSearch=NO;
     [super viewDidLoad];
     self.searchBar.delegate=self;
     [self initData];
-//    [self requestToServerYoutubeAPI];
+    //    [self requestToServerYoutubeAPI];
     
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"KaraokeSong"];
@@ -79,10 +79,10 @@ bool isSearch=NO;
     if([self.arrSongsList count]>1)
     {
         
-        for(KaraokeSong *song in self.arrSongsList){
-            NSLog(@"%@ - %@", song.nameSong, song.idSong);
-            
-        }
+        //        for(KaraokeSong *song in self.arrSongsList){
+        //            NSLog(@"%@ - %@", song.nameSong, song.idSong);
+        //
+        //        }
         
         [self.tableListSong reloadData];
     }
@@ -94,7 +94,7 @@ bool isSearch=NO;
 }
 -(void)viewDidAppear:(BOOL)animated
 {
-//    [self deleteAllInCoreData];
+    //    [self deleteAllInCoreData];
     [super viewDidAppear:self];
     // Fetch the devices from persistent data store
     
@@ -163,7 +163,7 @@ bool isSearch=NO;
     }
     UIAlertView *aleart=[[UIAlertView alloc]initWithTitle:@"FINISH" message:[NSString stringWithFormat:@"Insert to data",nil] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     [aleart show];
-
+    
     [self.tableListSong reloadData];
 }
 
@@ -199,8 +199,8 @@ bool isSearch=NO;
 {
     NSManagedObjectContext *context= [self managedObjectContext];
     Favourite *fsong = [NSEntityDescription
-                         insertNewObjectForEntityForName:@"Favourite"
-                         inManagedObjectContext:context];
+                        insertNewObjectForEntityForName:@"Favourite"
+                        inManagedObjectContext:context];
     if (fsong != nil){
         fsong.nameSong = nameSong;
         fsong.idSong = idSong;
