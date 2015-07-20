@@ -178,14 +178,6 @@
     [aleart show];
 }
 
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"gotoListRecord"]){
-        ListRecorder *nextController = segue.destinationViewController;
-    }
-}
-
 #pragma mark - AVAudioRecorderDelegate
 
 - (void) audioRecorderDidFinishRecording:(AVAudioRecorder *)avrecorder successfully:(BOOL)flag{
